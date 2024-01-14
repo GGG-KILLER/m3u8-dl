@@ -2,7 +2,6 @@
   lib,
   buildDotnetModule,
   dotnetCorePackages,
-  makeWrapper,
   ffmpeg,
 }:
 buildDotnetModule rec {
@@ -16,12 +15,10 @@ buildDotnetModule rec {
   # To update nuget deps, run `$(nix-build -A fetch-deps ./build.nix --no-out-link)`
   nugetDeps = ./deps.nix;
 
+  runtimeDeps = [ffmpeg];
+
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
-
-  postFixup = ''
-    wrapProgram $out/bin/m3u8-dl --prefix LD_LIBRARY_PATH ":" "${lib.makeLibraryPath [ffmpeg]}"
-  '';
 
   executables = ["m3u8-dl"];
 }
