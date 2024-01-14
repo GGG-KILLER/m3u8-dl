@@ -5,7 +5,7 @@ using m3u8Dl.IO;
 using m3u8Dl.Model;
 using m3u8Dl.Net;
 
-await CoconaApp.RunAsync(async (CurlParameters curlParams, ProgramParameters programParams, [Argument] Uri streamUri, CoconaAppContext ctx) =>
+await CoconaLiteApp.RunAsync(async (CurlParameters curlParams, ProgramParameters programParams, [Argument] Uri streamUri, CoconaAppContext ctx) =>
 {
     var baseUri = new UriBuilder(streamUri);
     baseUri.Path = Path.GetDirectoryName(baseUri.Path) + '/';
