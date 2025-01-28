@@ -1,7 +1,7 @@
 {
   buildDotnetModule,
   dotnetCorePackages,
-  ffmpeg,
+  ffmpeg_7,
 }:
 buildDotnetModule {
   pname = "m3u8-dl";
@@ -10,11 +10,10 @@ buildDotnetModule {
   src = ./.;
 
   projectFile = "src/m3u8-dl.csproj";
-  testProjectFile = "test/m3u8-dl.Test.csproj";
   # To update nuget deps, run `$(nix-build -A fetch-deps ./build.nix --no-out-link)`
   nugetDeps = ./deps.json;
 
-  runtimeDeps = [ ffmpeg ];
+  runtimeDeps = [ ffmpeg_7 ];
 
   dotnet-sdk = dotnetCorePackages.sdk_9_0;
   dotnet-runtime = dotnetCorePackages.runtime_9_0;
