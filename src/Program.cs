@@ -18,6 +18,16 @@ await CoconaLiteApp.RunAsync(async (CurlParameters curlParams, ProgramParameters
 
     if (!string.IsNullOrWhiteSpace(programParams.FfmpegPath))
     {
+        var failed = false;
+        await using var _ = await reporter.BeginScope("Checking ffmpeg library path...");
+        foreach (var notFound in FfmpegLibarySearcher.ListNotFoundNativeLibraries(programParams.FfmpegPath))
+        {
+            failed = true;
+            await reporter.ReportWarning($"Library not found: {notFound}");
+        }
+        if (failed)
+            return -1;
+
         MediaLibrary.Load(programParams.FfmpegPath);
     }
     else
@@ -30,6 +40,7 @@ await CoconaLiteApp.RunAsync(async (CurlParameters curlParams, ProgramParameters
         else
         {
             await reporter.ReportWarning("Couldn't find ffmpeg library path automatically.");
+            return -1;
         }
     }
 
