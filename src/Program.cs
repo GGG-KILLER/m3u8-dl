@@ -38,9 +38,10 @@ await CoconaLiteApp.RunAsync(async (CurlParameters curlParams, ProgramParameters
     {
         ffmpegVersion = MediaLibrary.FFMpegVersion();
     }
-    catch
+    catch (Exception ex)
     {
-        await reporter.ReportError($"Could not find ffmpeg libraries. Please provide them using the --ffmpeg flag.");
+        await reporter.ReportError($"Could not load ffmpeg libraries. Please ensure you have provided them using the --ffmpeg flag.");
+        await reporter.ReportError(ex.ToString());
         return -1;
     }
 
