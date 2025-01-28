@@ -71,5 +71,6 @@ await CoconaLiteApp.RunAsync(async (CurlParameters curlParams, ProgramParameters
     using var downloader = new StreamDownloader(settings);
     try { await downloader.Download(streamUri, ctx.CancellationToken); }
     catch (OperationCanceledException) { }
+    catch (Exception ex) { await reporter.ReportError(ex.ToString()); return -2; }
     return 0;
 });
